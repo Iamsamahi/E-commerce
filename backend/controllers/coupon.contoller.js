@@ -4,7 +4,7 @@ export const getCoupon = async(req , res)=>{
     try {
 
         const userId = req.user._id 
-        const coupons = await Coupon.findOne({userId:userId , isActive: true});
+        const coupons = await Coupon.findOne({userId:req.user._id , isActive: true});
         res.json(coupons||null);
 
     } catch (error) {

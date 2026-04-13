@@ -9,22 +9,4 @@ router.get("/" , protectRoute , getCoupon);
 router.post("/" , protectRoute , validateCoupon);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default router;
