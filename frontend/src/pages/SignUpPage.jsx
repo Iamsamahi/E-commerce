@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useUserStore } from '../stores/useUserStore';
+
 
 const SignUpPage = () => {
-  const loading = false; // Replace with actual loading state from your store or component state
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,12 +13,13 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
+  const {signup , loading} = useUserStore(); // Access the signup function and user state from the store
 
   // Prevent the default form submission behavior like page reload and log the form data to the console for now. it will not actually submit the data to the server yet, 
   // but this is where you would typically handle form validation and make an API call to your backend to create a new user account. 
   const handleSubmit = (e) => {    
     e.preventDefault();
-    console.log(formData);
+    signup(formData);
   };
 
   return (

@@ -2,14 +2,17 @@ import React, { useState } from 'react'; // Added useState
 import { LogIn, Mail, ArrowRight, Loader, Lock } from 'lucide-react';
 import { motion } from 'framer-motion'; // Added motion
 import { Link } from 'react-router-dom'; // Added Link
+import { useUserStore } from '../stores/useUserStore'; // Added useUserStore
 
 const LoginUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loading = false; // Changed to false so you can actually see the button
+  const {login , loading} = useUserStore();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    login({email, password});
     console.log(email, password);
   };
 

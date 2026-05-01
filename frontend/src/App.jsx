@@ -1,19 +1,30 @@
 //now that we have set up our main.jsx file to include BrowserRouter, 
 // we can proceed to define our App component in App.jsx.
-//is this app.jsx contains all common behaviour for the other pages like homepage, login page and signup page.
+//this app.jsx contains all common behaviour for the other pages like homepage, login page and signup page.
 // we will use react-router-dom to define the routes for our application, 
 // which will allow us to navigate between different pages based on the URL path.
 //every pagew will have a navigation bar and footer, so we will include those in the App component as well,
 
 
 
-import { Routes , Route } from 'react-router-dom'
+import { Routes , Route, Navigate } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import LoginUpPage from './pages/LoginUpPage'
 import SignUpPage from './pages/SignUpPage'
 import NavBar from './components/NavBar'
+import { Toaster } from 'react-hot-toast';
+import { useUserStore } from './stores/useUserStore'
+import { useEffect } from 'react'
+import LoadingSpinner from './components/LoadingSpinner'
 
 function App() {
+const {user,checkAuth,checkingAuth} = useUserStore();
+useEffect(() => {
+  checkAuth();
+}, [checkAuth]);
+
+if(checkingAuth) return <LoadingSpinner/>
+
 return (
 <div className='min-h-screen bg-gray-800 text-white relative overflow-hidden'>
 
@@ -28,10 +39,11 @@ return (
   <NavBar/>
     <Routes>
         <Route path = "/"  element = {<Homepage />} /> 
-        <Route path = "/signup"  element = {<SignUpPage />} /> 
-        <Route path = "/login"  element = {<LoginUpPage />} /> 
+        <Route path = "/signup"  element = {!user?<SignUpPage />: <Navigate to='/'/> } /> 
+        <Route path = "/login"  element = {!user?< LoginUpPage /> : <Navigate to='/'/> } /> 
       </Routes>
     </div>
+    <Toaster/>
   </div>
 )
   
