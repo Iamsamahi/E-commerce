@@ -4,6 +4,7 @@
 // // we will use react-router-dom to define the routes for our application, 
 // // which will allow us to navigate between different pages based on the URL path.
 // //every pagew will have a navigation bar and footer, so we will include those in the App component as well,
+  
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
@@ -14,6 +15,7 @@ import { Toaster } from 'react-hot-toast';
 import { useUserStore } from './stores/useUserStore';
 import { useEffect } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
+
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -27,6 +29,7 @@ function App() {
   return (
     <div className='min-h-screen bg-gray-800 text-white relative overflow-hidden'>
       
+
       {/* Background effect */}
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute inset-0'>
@@ -50,6 +53,11 @@ function App() {
           <Route
             path="/login"
             element={!user ? <LoginUpPage /> : <Navigate to="/" />}
+          />
+
+          <Route
+            path="/secret-dashboard"
+            element = {user?.role === 'admin' ?<AdminPage/> : <Navigate to="/login" />}
           />
         </Routes>
       </div>
